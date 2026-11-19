@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WM — Worker Muktar | Tongkrongan Paling Sibuk</title>
+<meta name="description" content="WM (Worker Muktar) — tongkrongan 8 anak yang rame, receh, dan baper. Main ML bareng tiap malem. Kenalan yuk!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<style>
+:root{
+  --bg:#0d0904;
+  --bg-2:#14100a;
+  --gold:#f5c518;
+  --gold-2:#d4a017;
+  --gold-deep:#b8860b;
+  --orange:#ff7a18;
+  --orange-2:#ff5e3a;
+  --amber:#ff9a3c;
+  --cream:#fff8e7;
+  --champagne:#e8c87a;
+  --text:#fdf6e3;
+  --muted:#b8a888;
+  --glass:rgba(255,248,231,.06);
+  --glass-2:rgba(255,248,231,.1);
+  --glass-brd:rgba(245,197,24,.22);
+  --glass-brd-soft:rgba(255,248,231,.14);
+  --radius:24px;
+  --maxw:1180px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --blur:blur(22px) saturate(160%);
+  --blur-strong:blur(34px) saturate(180%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+/* warm animated background glows */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(circle at 15% 12%,rgba(245,197,24,.22),transparent 42%),
+    radial-gradient(circle at 85% 65%,rgba(255,122,24,.2),transparent 45%),
+    radial-gradient(circle at 45% 95%,rgba(255,94,58,.16),transparent 48%),
+    radial-gradient(circle at 70% 20%,rgba(232,200,122,.14),transparent 40%);
+  animation:bgdrift 22s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes bgdrift{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-2%,1%) scale(1.04)}
+  100%{transform:translate(2%,-1%) scale(1)}
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:-1;opacity:.04;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+h1,h2,h3,h4,h5{font-family:'Sora',sans-serif;line-height:1.12;font-weight:700;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+::selection{background:var(--gold);color:#0d0904}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg-2)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--orange));border-radius:10px}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.gold-text{
+  background:linear-gradient(110deg,var(--gold),var(--amber) 45%,var(--orange));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);padding:7px 15px;border-radius:99px;
+  background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.28);
+  backdrop-filter:blur(10px);
+}
+
+/* ========== SCROLL PROGRESS ========== */
+.scrollprog{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:950;
+  background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold-2));
+  box-shadow:0 0 12px rgba(245,197,24,.6);
+  transition:width .1s linear;
+}
+
+/* ========== CURSOR GLOW ========== */
+.cursor-glow{
+  position:fixed;top:0;left:0;width:380px;height:380px;z-index:1;pointer-events:none;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(245,197,24,.16),rgba(255,122,24,.06) 40%,transparent 65%);
+  filter:blur(20px);
+  transform:translate(-50%,-50%);transition:opacity .3s;mix-blend-mode:screen;
+}
+@media (hover:none){.cursor-glow{display:none}}
+
+/* ========== PARTICLES ========== */
+.particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.particle{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:var(--gold);opacity:0;box-shadow:0 0 8px var(--gold);
+  animation:pfloat linear infinite;
+}
+@keyframes pfloat{
+  0%{transform:translateY(110vh) translateX(0);opacity:0}
+  10%{opacity:.5}
+  90%{opacity:.4}
+  100%{transform:translateY(-10vh) translateX(40px);opacity:0}
+}
+
+/* ========== PRELOADER ========== */
+.preloader{
+  position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  transition:opacity .6s var(--ease),visibility .6s var(--ease);
+}
+.preloader.hide{opacity:0;visibility:hidden}
+.pre-logo{
+  font-family:'Sora';font-size:clamp(3rem,12vw,6rem);font-weight:800;
+  background:linear-gradient(110deg,var(--gold),var(--orange),var(--gold));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  background-size:200% auto;animation:shine 2s linear infinite,pulse 1.4s ease-in-out infinite;
+  letter-spacing:-.04em;
+}
+@keyframes shine{0%{background-position:0% center}100%{background-position:200% center}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.85}}
+.pre-bar{width:170px;height:3px;background:rgba(255,248,231,.1);border-radius:99px;overflow:hidden}
+.pre-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--orange));animation:load 1.6s var(--ease) forwards}
+.pre-sub{font-size:.82rem;color:var(--muted);letter-spacing:.1em}
+@keyframes load{0%{width:0}100%{width:100%}}
+
+/* ========== NAVBAR ========== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:16px 0;transition:all .4s var(--ease)}
+.nav.scrolled{padding:9px 0}
+.nav.scrolled .nav-inner{
+  background:rgba(13,9,4,.55);backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);
+  border:1px solid var(--glass-brd);border-radius:99px;
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.12),0 12px 30px rgba(0,0,0,.4);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:6px 10px 6px 18px;transition:all .4s var(--ease)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Sora';font-weight:800;font-size:1.3rem}
+.nav-logo .badge{
+  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  box-shadow:0 6px 20px rgba(245,197,24,.4),inset 0 1px 0 rgba(255,255,255,.3);
+}
+.nav-menu{display:flex;align-items:center;gap:4px}
+.nav-menu a{
+  padding:9px 15px;border-radius:99px;font-size:.88rem;font-weight:500;color:var(--muted);
+  transition:all .3s var(--ease);position:relative;
+}
+.nav-menu a:hover,.nav-menu a.active{color:var(--text);background:var(--glass-2)}
+.nav-menu a.active{color:var(--gold)}
+.nav-cta{
+  padding:10px 18px;border-radius:99px;font-weight:600;font-size:.86rem;color:#0d0904;
+  background:linear-gradient(110deg,var(--gold),var(--amber));
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  box-shadow:0 6px 18px rgba(245,197,24,.3);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(245,197,24,.5)}
+.nav-toggle{display:none;background:var(--glass);border:1px solid var(--glass-brd-soft);color:var(--text);cursor:pointer;padding:8px;border-radius:12px;backdrop-filter:var(--blur)}
+.nav-toggle svg{width:22px;height:22px}
+
+/* ========== HERO ========== */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 60px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;width:100%}
+.hero-badge{margin-bottom:22px}
+.hero h1{font-size:clamp(3.4rem,12vw,8rem);font-weight:800;line-height:.92;letter-spacing:-.04em;margin-bottom:14px}
+.hero h1 .wm{
+  display:inline-block;
+  background:linear-gradient(110deg,var(--gold) 0%,var(--cream) 30%,var(--amber) 60%,var(--orange) 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shine 5s linear infinite;
+  filter:drop-shadow(0 8px 30px rgba(245,197,24,.25));
+}
+.hero h1 .full{display:block;font-size:clamp(1.1rem,3.4vw,2rem);color:var(--champagne);font-weight:600;letter-spacing:.02em;margin-top:8px}
+.hero p.lead{font-size:clamp(1.05rem,2vw,1.22rem);color:#e8dec4;max-width:540px;margin:22px 0 30px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:36px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:99px;font-weight:600;font-size:.96rem;
+  cursor:pointer;border:none;transition:all .35s var(--ease);font-family:inherit;position:relative;overflow:hidden;
+}
+.btn-primary{color:#0d0904;background:linear-gradient(110deg,var(--gold),var(--amber),var(--orange));background-size:180% auto;box-shadow:0 10px 28px rgba(245,197,24,.32)}
+.btn-primary:hover{transform:translateY(-3px);background-position:100% center;box-shadow:0 16px 36px rgba(245,197,24,.5)}
+.btn-ghost{color:var(--text);background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-brd-soft)}
+.btn-ghost:hover{background:var(--glass-2);transform:translateY(-3px);border-color:var(--glass-brd)}
+.hero-stats{display:flex;gap:30px;flex-wrap:wrap}
+.stat .num{font-family:'Sora';font-size:1.9rem;font-weight:800;color:var(--gold)}
+.stat .lbl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+/* hero visual */
+.hero-visual{position:relative;aspect-ratio:1/1;display:grid;place-items:center;will-change:transform}
+.hero-orb{
+  position:absolute;inset:6%;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--gold),var(--orange),var(--gold-2),var(--amber),var(--gold));
+  filter:blur(3px);opacity:.7;animation:spin 20s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-orb::after{content:'';position:absolute;inset:16%;border-radius:50%;background:rgba(13,9,4,.5);backdrop-filter:blur(8px)}
+.hero-stack{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:78%}
+.hero-chip{
+  background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--glass-brd-soft);border-radius:16px;padding:13px 14px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.12);
+  animation:float 6s ease-in-out infinite;
+}
+.hero-chip:nth-child(2){animation-delay:-1.5s}
+.hero-chip:nth-child(3){animation-delay:-3s}
+.hero-chip:nth-child(4){animation-delay:-4.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-chip .emoji{font-size:1.5rem}
+.hero-chip .t{font-size:.82rem;font-weight:600}
+.hero-chip .s{font-size:.68rem;color:var(--muted)}
+.scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:.7rem;letter-spacing:.1em}
+.scroll-hint .mouse{width:22px;height:36px;border:2px solid var(--muted);border-radius:12px;position:relative}
+.scroll-hint .mouse::before{content:'';position:absolute;top:6px;left:50%;width:4px;height:7px;background:var(--gold);border-radius:4px;transform:translateX(-50%);animation:scrolldot 1.6s infinite}
+@keyframes scrolldot{0%{opacity:1;top:6px}100%{opacity:0;top:18px}}
+
+/* ========== ML MARQUEE ========== */
+.marquee{
+  overflow:hidden;padding:14px 0;border-top:1px solid var(--glass-brd-soft);border-bottom:1px solid var(--glass-brd-soft);
+  background:linear-gradient(90deg,rgba(245,197,24,.05),rgba(255,122,24,.08),rgba(245,197,24,.05));
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+}
+.marquee-track{display:flex;gap:30px;white-space:nowrap;width:max-content;animation:marq 26s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marq-item{display:flex;align-items:center;gap:14px;font-family:'Sora';font-weight:700;font-size:1rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em}
+.marq-item .sep{color:var(--orange);font-size:.7rem}
+.marq-item .star{filter:drop-shadow(0 0 6px rgba(245,197,24,.5))}
+
+/* ========== SECTION BASE ========== */
+.section{padding:90px 0;position:relative}
+.section-head{margin-bottom:48px;max-width:680px}
+.section-head h2{font-size:clamp(2rem,5vw,3.2rem);margin:14px 0 14px}
+.section-head p{color:var(--muted);font-size:1.02rem}
+.reveal{opacity:0;transform:translateY(40px) scale(.98);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+
+/* ========== ABOUT ========== */
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:start}
+.about-card{
+  padding:34px;border-radius:var(--radius);
+  background:var(--glass);backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);
+  border:1px solid var(--glass-brd-soft);
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.14),0 18px 44px rgba(0,0,0,.4);
+}
+.about-card p{color:#e8dec4;margin-bottom:16px;font-size:1.04rem}
+.about-card p:last-child{margin-bottom:0}
+.about-card strong{color:var(--gold)}
+.feat-list{display:grid;gap:14px}
+.feat{
+  display:flex;gap:14px;align-items:flex-start;padding:18px;border-radius:18px;
+  background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--glass-brd-soft);
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.1);
+  transition:transform .35s var(--ease),border-color .35s,background .35s;
+}
+.feat:hover{transform:translateX(6px);border-color:var(--glass-brd);background:var(--glass-2)}
+.feat .ic{font-size:1.6rem;flex-shrink:0}
+.feat h4{font-size:1rem;margin-bottom:3px}
+.feat p{font-size:.86rem;color:var(--muted);margin:0}
+
+/* ========== PROFILES — GLASS TINTED ========== */
+.profiles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.profile-card{
+  position:relative;border-radius:24px;overflow:hidden;cursor:pointer;
+  background:rgba(13,9,4,.28);
+  backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);
+  border:1px solid var(--glass-brd-soft);
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.18),0 16px 38px rgba(0,0,0,.42);
+  isolation:isolate;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s;
+  will-change:transform;
+}
+.profile-card:hover{box-shadow:inset 0 1px 0 rgba(255,248,231,.25),0 26px 56px rgba(0,0,0,.5);border-color:var(--glass-brd)}
+/* color tint follows the person's theme + gradient */
+.profile-card .tint{
+  position:absolute;inset:0;z-index:0;
+  background:linear-gradient(165deg,var(--c1),var(--c2) 70%);
+  opacity:.4;pointer-events:none;
+  transition:opacity .55s var(--ease);
+}
+.profile-card:hover .tint{opacity:.62}
+/* extra soft gradient sheen for depth */
+.profile-card .sheen{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,248,231,.22),transparent 38%,rgba(13,9,4,.18));
+}
+/* shine sweep on hover */
+.profile-card .shine{
+  position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(110deg,transparent 32%,rgba(255,248,231,.4) 50%,transparent 68%);
+  transform:translateX(-130%);transition:transform .9s var(--ease);
+}
+.profile-card:hover .shine{transform:translateX(130%)}
+.profile-card .photo{position:relative;z-index:2;padding:20px 18px 0;display:flex;justify-content:center}
+.profile-card .photo .ava{
+  width:128px;height:128px;border-radius:50%;overflow:hidden;
+  background:rgba(13,9,4,.5);
+  border:3px solid rgba(255,248,231,.28);
+  box-shadow:0 10px 30px rgba(0,0,0,.5),inset 0 2px 6px rgba(0,0,0,.3);
+  transition:transform .5s var(--ease);
+}
+.profile-card:hover .photo .ava{transform:scale(1.06) rotate(-2deg)}
+.profile-card .photo .ava img{width:100%;height:100%;object-fit:cover}
+.profile-card .info{position:relative;z-index:2;padding:14px 18px 20px;text-align:center}
+.profile-card .rank{
+  display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:99px;background:rgba(13,9,4,.45);backdrop-filter:blur(6px);margin-bottom:8px;color:#fff;
+  border:1px solid rgba(255,248,231,.15);
+}
+.profile-card .name{font-size:1.06rem;font-weight:700;color:#fff}
+.profile-card .nick{font-size:.82rem;color:#fff;opacity:.9;margin-top:2px}
+.profile-card .role{font-size:.72rem;color:var(--cream);margin-top:6px;font-weight:600;letter-spacing:.03em;opacity:.95}
+.profile-card .ml-badge{
+  position:absolute;top:14px;right:14px;z-index:3;
+  font-size:.6rem;font-weight:700;letter-spacing:.06em;padding:4px 8px;border-radius:99px;
+  background:linear-gradient(110deg,var(--gold),var(--orange));color:#0d0904;
+  box-shadow:0 4px 12px rgba(245,197,24,.4);text-transform:uppercase;
+}
+.profile-card .peek{
+  position:absolute;inset:auto 0 0 0;z-index:3;padding:14px;text-align:center;
+  background:rgba(13,9,4,.55);backdrop-filter:blur(8px);
+  transform:translateY(100%);transition:transform .45s var(--ease);color:#fff;font-size:.8rem;font-weight:600;
+  border-top:1px solid rgba(255,248,231,.12);
+}
+.profile-card:hover .peek{transform:translateY(0)}
+
+/* ========== MODAL ========== */
+.modal{
+  position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s var(--ease);
+}
+.modal.open{opacity:1;visibility:visible}
+.modal-backdrop{position:absolute;inset:0;background:rgba(5,3,1,.8);backdrop-filter:blur(10px)}
+.modal-card{
+  position:relative;z-index:2;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;
+  border-radius:28px;
+  background:rgba(20,16,10,.6);backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);
+  border:1px solid var(--glass-brd);
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.18),0 30px 70px rgba(0,0,0,.6);
+  transform:scale(.9) translateY(24px);transition:transform .5s var(--ease);
+}
+.modal.open .modal-card{transform:none}
+.modal-hero{position:relative;padding:40px 30px 26px;text-align:center;color:#fff;background:linear-gradient(160deg,var(--mc1),var(--mc2))}
+.modal-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 0%,rgba(255,248,231,.28),transparent 60%);pointer-events:none}
+.modal-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,248,231,.12),transparent 40%);pointer-events:none}
+.modal-ava{
+  width:120px;height:120px;border-radius:50%;margin:0 auto 14px;overflow:hidden;
+  border:4px solid rgba(255,248,231,.35);box-shadow:0 12px 30px rgba(0,0,0,.5);position:relative;z-index:2;
+}
+.modal-ava img{width:100%;height:100%;object-fit:cover}
+.modal-hero h3{font-size:1.6rem;position:relative;z-index:2;color:#fff}
+.modal-hero .nick{color:#fff;opacity:.95;font-size:1rem;position:relative;z-index:2}
+.modal-hero .role-chip{display:inline-block;margin-top:10px;padding:5px 14px;border-radius:99px;font-size:.76rem;font-weight:600;background:rgba(13,9,4,.32);border:1px solid rgba(255,248,231,.2);position:relative;z-index:2;color:#fff}
+.modal-hero .ml-role{
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;margin-left:6px;padding:5px 12px;border-radius:99px;
+  font-size:.74rem;font-weight:700;color:#0d0904;background:linear-gradient(110deg,var(--gold),var(--orange));
+  position:relative;z-index:2;box-shadow:0 4px 12px rgba(245,197,24,.4);
+}
+.modal-close{position:absolute;top:16px;right:16px;z-index:5;width:38px;height:38px;border-radius:50%;background:rgba(13,9,4,.4);border:1px solid rgba(255,248,231,.18);color:#fff;cursor:pointer;font-size:1.3rem;display:grid;place-items:center;transition:transform .3s,background .3s;backdrop-filter:blur(6px)}
+.modal-close:hover{transform:rotate(90deg);background:rgba(13,9,4,.65)}
+.modal-body{padding:26px 30px 30px}
+.modal-body h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.modal-body .story{color:#e8dec4;margin-bottom:22px;font-size:.98rem}
+.facts{display:grid;gap:10px;margin-bottom:22px}
+.fact{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:#dcd0b6}
+.fact .dot{color:var(--orange);font-weight:700;flex-shrink:0}
+.quote{padding:16px 18px;border-left:3px solid var(--gold);background:rgba(245,197,24,.08);border-radius:0 12px 12px 0;font-style:italic;color:#e8dec4;margin-bottom:22px;font-size:.92rem}
+.contact-row{display:grid;gap:10px}
+.contact-row a,.contact-row .c-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:14px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-brd-soft);font-size:.9rem;transition:all .3s var(--ease)}
+.contact-row a:hover{background:var(--glass-2);transform:translateX(4px);border-color:var(--glass-brd)}
+.contact-row .ic{font-size:1.2rem;flex-shrink:0}
+.contact-row .lbl{font-size:.72rem;color:var(--muted);display:block}
+.contact-row .val{font-weight:600}
+
+/* ========== PHOTO DUMP ========== */
+.dump-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:160px;gap:14px}
+.dump-card{
+  position:relative;border-radius:20px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--glass-brd-soft);
+  background:rgba(13,9,4,.3);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:18px;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
+  box-shadow:inset 0 1px 0 rgba(255,248,231,.14);
+  will-change:transform;
+}
+.dump-card .tint{position:absolute;inset:0;background:linear-gradient(160deg,var(--c1),var(--c2));opacity:.5;transition:opacity .45s;z-index:0}
+.dump-card:hover .tint{opacity:.75}
+.dump-card .sheen{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(255,248,231,.22),transparent 40%);pointer-events:none}
+.dump-card .shine{position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(110deg,transparent 32%,rgba(255,248,231,.38) 50%,transparent 68%);transform:translateX(-130%);transition:transform .9s var(--ease)}
+.dump-card:hover .shine{transform:translateX(130%)}
+.dump-card:hover{box-shadow:0 22px 44px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,248,231,.2);z-index:2}
+.dump-card .emoji{font-size:2.4rem;margin-bottom:8px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));position:relative;z-index:3}
+.dump-card .cap{font-size:.84rem;font-weight:700;color:#fff;position:relative;z-index:3}
+.dump-card .sub{font-size:.7rem;color:#fff;opacity:.85;margin-top:3px;position:relative;z-index:3}
+.dump-card.w2{grid-column:span 2}
+.dump-card.h2{grid-row:span 2}
+.dump-card.h2 .emoji{font-size:3.4rem}
+
+/* ========== CONTACT ========== */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:30px;align-items:start}
+.contact-info{
+  padding:30px;border-radius:var(--radius);
+  background:var(--glass);backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);
+  border:1px solid var(--glass-brd-soft);box-shadow:inset 0 1px 0 rgba(255,248,231,.14),0 16px 40px rgba(0,0,0,.4);
+}
+.contact-info h3{font-size:1.5rem;margin-bottom:14px}
+.contact-info p{color:var(--muted);margin-bottom:22px;font-size:.96rem}
+.contact-info .line{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--glass-brd-soft);font-size:.9rem}
+.contact-info .line:first-of-type{border-top:none}
+.contact-info .line .ic{font-size:1.3rem}
+.contact-info .line .v{font-weight:600;color:var(--text)}
+.contact-info .line .l{font-size:.72rem;color:var(--muted);display:block}
+.form{display:grid;gap:16px}
+.field label{font-size:.8rem;font-weight:600;color:var(--muted);display:block;margin-bottom:7px;letter-spacing:.03em}
+.field input,.field textarea{
+  width:100%;padding:14px 16px;border-radius:14px;
+  background:rgba(13,9,4,.35);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--glass-brd-soft);color:var(--text);font-family:inherit;font-size:.95rem;
+  transition:border-color .3s,background .3s;
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);opacity:.7}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:rgba(13,9,4,.5);box-shadow:0 0 0 3px rgba(245,197,24,.12)}
+.field textarea{resize:vertical;min-height:130px}
+.form-card{padding:30px;border-radius:var(--radius);background:var(--glass);backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);border:1px solid var(--glass-brd-soft);box-shadow:inset 0 1px 0 rgba(255,248,231,.14),0 16px 40px rgba(0,0,0,.4)}
+.form-status{padding:14px 16px;border-radius:12px;font-size:.9rem;margin-top:4px;display:none}
+.form-status.show{display:block;animation:fadein .4s var(--ease)}
+.form-status.ok{background:rgba(245,197,24,.12);border:1px solid rgba(245,197,24,.4);color:var(--gold)}
+.form-status.err{background:rgba(255,94,58,.12);border:1px solid rgba(255,94,58,.4);color:var(--orange-2)}
+.form-status.load{background:rgba(255,154,60,.12);border:1px solid rgba(255,154,60,.4);color:var(--amber)}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ========== FOOTER ========== */
+.footer{padding:60px 0 30px;border-top:1px solid var(--glass-brd-soft);margin-top:40px}
+.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footer .brand{display:flex;align-items:center;gap:10px;font-family:'Sora';font-weight:800;font-size:1.15rem}
+.footer .copy{color:var(--muted);font-size:.82rem}
+.footer-social{display:flex;gap:10px}
+.footer-social a{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.1rem;background:var(--glass);backdrop-filter:var(--blur);border:1px solid var(--glass-brd-soft);transition:all .3s var(--ease)}
+.footer-social a:hover{transform:translateY(-3px);background:var(--glass-2);border-color:var(--gold)}
+.totop{position:fixed;bottom:24px;right:24px;z-index:400;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));border:none;color:#0d0904;cursor:pointer;font-size:1.2rem;display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(20px);transition:all .4s var(--ease);box-shadow:0 10px 26px rgba(245,197,24,.45)}
+.totop.show{opacity:1;visibility:visible;transform:none}
+.totop:hover{transform:translateY(-3px)}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-visual{max-width:380px;margin:0 auto}
+  .about-grid{grid-template-columns:1fr;gap:24px}
+  .profiles-grid{grid-template-columns:repeat(2,1fr)}
+  .dump-grid{grid-template-columns:repeat(3,1fr)}
+  .contact-grid{grid-template-columns:1fr;gap:24px}
+}
+@media (max-width:640px){
+  .nav-menu{position:fixed;top:0;right:0;bottom:0;width:78%;max-width:320px;z-index:600;flex-direction:column;align-items:flex-start;gap:6px;padding:80px 22px 22px;background:rgba(20,16,10,.7);backdrop-filter:var(--blur-strong);-webkit-backdrop-filter:var(--blur-strong);border-left:1px solid var(--glass-brd);transform:translateX(100%);transition:transform .4s var(--ease)}
+  .nav-menu.open{transform:none}
+  .nav-menu a{width:100%;font-size:1rem;padding:12px 16px}
+  .nav-toggle{display:block}
+  .nav.scrolled .nav-inner{border-radius:99px}
+  .section{padding:70px 0}
+  .profiles-grid{grid-template-columns:1fr;gap:14px}
+  .profile-card{display:flex;align-items:center;gap:14px}
+  .profile-card .photo{padding:14px 0 14px 14px}
+  .profile-card .photo .ava{width:80px;height:80px}
+  .profile-card .info{text-align:left;padding:14px}
+  .profile-card .peek{display:none}
+  .profile-card .ml-badge{top:10px;right:10px}
+  .dump-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px}
+  .dump-card.w2{grid-column:span 2}
+  .dump-card.h2{grid-row:span 1}
+  .dump-card.h2 .emoji{font-size:2.4rem}
+  .hero-stats{gap:18px}
+  .modal-card{max-height:92vh}
+  .modal-hero{padding:30px 20px 22px}
+  .modal-body{padding:22px 20px}
+  .footer-grid{flex-direction:column;text-align:center}
+  .marq-item{font-size:.86rem}
+}
+@media (max-width:380px){
+  .hero-cta{flex-direction:column}
+  .btn{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scrollprog" id="scrollProg"></div>
+<!-- CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="pre-logo">WM</div>
+  <div class="pre-bar"><span></span></div>
+  <div class="pre-sub">loading the gang…</div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#home" class="nav-logo">
+      <span class="badge">☕</span>
+      <span class="gold-text">WM</span>
+    </a>
+    <div class="nav-menu" id="navMenu">
+      <a href="#home">Beranda</a>
+      <a href="#about">Tentang</a>
+      <a href="#profiles">Anak-Anak</a>
+      <a href="#dump">Foto Dump</a>
+      <a href="#contact">Kontak</a>
+    </div>
+    <a href="#contact" class="nav-cta">Gabung Yuk</a>
+    <button class="nav-toggle" id="navToggle" aria-label="menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow hero-badge reveal">☕ Tongkrongan since day one</span>
+      <h1 class="reveal d1">
+        <span class="wm">WM</span>
+        <span class="full">Worker Muktar</span>
+      </h1>
+      <p class="lead reveal d2">Tongkrongan paling rame, paling receh, paling baper. 8 anak (plus bapak-ibu) yang kumpul tiap malem, ngopi gratis, ketawa lepas, dan grind ML sampai subuh. Kadang bikin masalah kecil jadi drama 3 episode. 😎</p>
+      <div class="hero-cta reveal d3">
+        <a href="#profiles" class="btn btn-primary">Kenalan Yuk →</a>
+        <a href="#contact" class="btn btn-ghost">Kirim Pesan</a>
+      </div>
+      <div class="hero-stats reveal d4">
+        <div class="stat"><div class="num gold-text" data-count="8">0</div><div class="lbl">Anak WM</div></div>
+        <div class="stat"><div class="num gold-text">∞</div><div class="lbl">Gelas Kopi</div></div>
+        <div class="stat"><div class="num gold-text">5</div><div class="lbl">ML Squad</div></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal d2" id="heroVisual">
+      <div class="hero-orb"></div>
+      <div class="hero-stack">
+        <div class="hero-chip"><span class="emoji">☕</span><div><div class="t">Ngopi</div><div class="s">tiap malem</div></div></div>
+        <div class="hero-chip"><span class="emoji">🎮</span><div><div class="t">ML Squad</div><div class="s">mythic grind</div></div></div>
+        <div class="hero-chip"><span class="emoji">⚽</span><div><div class="t">Futsal</div><div class="s">kalau ada duit</div></div></div>
+        <div class="hero-chip"><span class="emoji">🍕</span><div><div class="t">Makan</div><div class="s">bareng terus</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="mouse"></div><span>SCROLL</span></div>
+</header>
+
+<!-- ML MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Tentang Kita</span>
+      <h2>WM itu apa sih?</h2>
+      <p>Jujur, kita juga kadang bingung mau dijelasin gimana. Tapi ini intinya.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <p><strong>WM = Worker Muktar.</strong> Tapi tenang, jangan dikira kita kerja terus. Sebenarnya kita cuma tongkrongan yang kebetulan dikasih nama agak formal. Asalnya cuma Om Muktar sama Ka Bila yang buka rumah buat anak-anak mampir, lama-lama malah jadi basecamp resmi tiap malem.</p>
+        <p>Mulai dari <strong>ngopi malem minggu</strong>, futsal kalau lagi ada duit, debat capcay soal topik gak penting sampai subuh, sampai <strong>grind Mobile Legends</strong> tiap malem jam 10 — itu semua WM. Gak ada syarat jadi, gak ada iuran tetap (cuma kadang ditagih beli ciki), yang ada cuma satu aturan: <strong>dateng, duduk, ngomong, pulang. Gitu doang.</strong></p>
+        <p>Yang bikin WM beda itu keluarganya. Bukan tongkrongan anak gaul yang cuma ketawa-ketawa doang, di sini ada bapak-ibu yang jadi <strong>"rumah"</strong> buat kita semua. Makanya walau umur beda jauh, tetep nyambung. Soalnya kita gak pernah jaim, ngomong apa adanya, dan saling jaga — walaupun gayanya Receh Level Dewa. 🤙</p>
+      </div>
+      <div class="feat-list">
+        <div class="feat reveal d1"><span class="ic">🏠</span><div><h4>Basecamp tetap</h4><p>Rumah Om Muktar &amp; Ka Bila. Buka tiap malem, freeflow kopi.</p></div></div>
+        <div class="feat reveal d2"><span class="ic">🎮</span><div><h4>ML Squad 5v5</h4><p>Icad, Gilang, Gani, Pepen, Randoka — grind mythic bareng.</p></div></div>
+        <div class="feat reveal d3"><span class="ic">👨‍👩‍👦</span><div><h4>Keluarga, bukan cuma temen</h4><p>Ada bapak-ibu yang jagain, ada anak-anak yang bikin rame.</p></div></div>
+        <div class="feat reveal d4"><span class="ic">💛</span><div><h4>No judgment zone</h4><p>Curhat boleh, baper boleh, joke receh wajib. Yang penting nyantai.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILES -->
+<section class="section" id="profiles">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Squad</span>
+      <h2>Kenalin, anak-anak WM</h2>
+      <p>Dari yang paling senior sampai paling muda. Klik kartunya buat lihat cerita lengkapnya — jangan kaget kalau ada yang agak nyeleneh. Yang ada badge emas itu <strong>ML squad</strong> kita. 👀</p>
+    </div>
+    <div class="profiles-grid" id="profilesGrid"></div>
+  </div>
+</section>
+
+<!-- PHOTO DUMP -->
+<section class="section" id="dump">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">📸 Foto Dump</span>
+      <h2>Momen-momen receh WM</h2>
+      <p>Foto rame-rame yang kalau dilihat lagi bikin senyum-senyum sendiri. Ada sesi ML, ngopi, futsal, dan momen-momen receh lain. Ini sebagian doang, sisanya… ya gak boleh dipublish. 😅</p>
+    </div>
+    <div class="dump-grid" id="dumpGrid"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">💌 Hubungi Kita</span>
+      <h2>Mau nimbrung? Atau curhat?</h2>
+      <p>Kirim pesan ke kita. Gak perlu formal-formal, ketik aja apa yang lo mau. Kita baca semua (kalau lagi gak tidur atau lagi gak di dalam game). Form ini langsung landing di inbox email kita, jadi dijamin kebaca.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Tongkrongan WM</h3>
+        <p>Buka tiap malem di basecamp Om Muktar &amp; Ka Bila. Mampir aja, gak perlu RSVP. Tapi kalau mau kasih tau duluan atau ada yang penting, bentuk pesan di samping ya.</p>
+        <div class="line"><span class="ic">📍</span><div><span class="l">Basecamp</span><span class="v">Rumah Om Muktar &amp; Ka Bila</span></div></div>
+        <div class="line"><span class="ic">🕑</span><div><span class="l">Jam buka</span><span class="v">Malem-malem sampai ngantuk</span></div></div>
+        <div class="line"><span class="ic">☕</span><div><span class="l">Tarif</span><span class="v">Gratis (bawa ciki boleh)</span></div></div>
+        <div class="line"><span class="ic">📧</span><div><span class="l">Email</span><span class="v">risyadibrahim0@gmail.com</span></div></div>
+      </div>
+      <form class="form-card reveal d1" id="contactForm">
+        <div class="form">
+          <div class="field">
+            <label for="cname">Nama lo siapa?</label>
+            <input type="text" id="cname" name="name" placeholder="contoh: Andi si penjudi ciki" required>
+          </div>
+          <div class="field">
+            <label for="cemail">Email lo (biar kita balas)</label>
+            <input type="email" id="cemail" name="email" placeholder="kamu@email.com" required>
+          </div>
+          <div class="field">
+            <label for="cmsg">Pesan / curhat / undangan</label>
+            <textarea id="cmsg" name="message" placeholder="Tulis apa aja… mau nimbrung, mau undang main ML, mau curhat soal mantan, semua boleh. Jangan sungkan." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="submitBtn" style="justify-content:center">Kirim Pesan ✈️</button>
+          <div class="form-status" id="formStatus"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="brand"><span style="width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1rem;background:linear-gradient(135deg,var(--gold),var(--orange));margin-right:8px;box-shadow:0 4px 12px rgba(245,197,24,.35)">☕</span><span class="gold-text">Worker Muktar</span></div>
+      <div class="copy" style="margin-top:8px">© 2026 WM — dibuat bareng, buat bareng. 🤙</div>
+    </div>
+    <div class="footer-social">
+      <a href="#home" title="Beranda">🏠</a>
+      <a href="#profiles" title="Anak-Anak">👥</a>
+      <a href="#dump" title="Foto">📸</a>
+      <a href="#contact" title="Kontak">💌</a>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="toTop" aria-label="ke atas">↑</button>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-card" id="modalCard">
+    <button class="modal-close" id="modalClose" aria-label="tutup">×</button>
+    <div class="modal-hero" id="modalHero"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ============ DATA — warm palette (gold/orange/white variants) ============ */
+const profiles=[
+  {
+    name:'Om Muktar',nick:'Muktar',role:'Suami Ka Bila · Bapaknya WM',rank:1,
+    c1:'#d4a017',c2:'#8b6914',seed:'MuktarWM',
+    phone:'+62 812-3456-7001',
+    tagline:'Klik buat kenalan si bos 👑',
+    story:'Bosnya WM. Yang paling dewasa, selalu jadi tempat pulang kalau anak-anak lagi berantem atau bingung. Suka ngopi sambil sotoy, ketawa lepas sampai tetangga tegur, dan kebetulan suami dari Ka Bila. Walau kelihatan santai, beliau yang nyetir arah tongkrongan ini biar gak kemana-mana. Kadang nontonin anak-anak main ML sambil komen "itu apaan sih, ribet amat". Tanpa beliau, WM bukan WM.',
+    facts:['Kopi hitam doang, gak pake gula — katanya biar "jaga macho"','Bisa debat soal bola sampai subuh walau gak nonton','Paling demen ngajak makan anak-anak kalau lagi gajian','Sifatnya: tenang di luar, gila di dalam'],
+    quote:'"Ngopi dulu, masalah belakangan. Kalau masih ribet, ngopi lagi."'
+  },
+  {
+    name:'Ka Bila',nick:'Bila',role:'Istri Om Muktar · Ibunya WM',rank:2,
+    c1:'#e8985a',c2:'#b56b2e',seed:'BilaWM',
+    phone:'+62 812-3456-7002',
+    tagline:'Ibunya WM, sabar level dewa 💪',
+    story:'Ibunya WM. Yang jagain anak-anak biar gak kelamaan nongkrong, gak kelaperan, dan gak berantem karena hal bodoh. Sabar level dewa, masakannya juara (diakui semua), dan satu-satunya yang bisa bikin Om Muktar diem dengan satu tatapan. Di WM, Ka Bila bukan cuma istri bos — dia bos yang asli. Kalau anak-anak lagi grind ML sampai pagi, Ka Bila yang ingetin "udah ya, tidur".',
+    facts:['Masakannya jadi alasan utama anak-anak balik lagi','Kalau udah bilang "udah ya pulang", pasti pulang','Paling inget ulang tahun tiap anak WM','Sifatnya: tegas tapi sayang banget'],
+    quote:'"Makan dulu, baru ngomong. Masih kosong perutmu, kok."'
+  },
+  {
+    name:'Risyad',nick:'Icad',role:'Anak Tongkrongan #3',rank:3,
+    c1:'#f5c518',c2:'#ffb800',seed:'RisyadIcad',
+    phone:'+62 812-3456-7003',
+    mlRole:'🎮 Gold Lane · Marksman',
+    tagline:'Marksman WM, late game andalan 🎯',
+    story:'Versi gaul dari anak sulung tongkrongan. Suka ngomong melintir, bikin group chat rame walau isinya cuma sticker, dan selalu punya rencana dadakan yang ujung-ujungnya nanggung. Di ML, Icad jadi Marksman andalan WM — early game agak gigit jari, tapi kalau udah full item late game, dia yang carry. Tipe orang yang bakal ngajak lo ke mana-mana walau gak tahu mau ngapain, tapi anehnya selalu seru.',
+    facts:['Marksman andalan WM — late game = jaga jarak, last hit rapi','Admin group chat paling aktif (dan paling rese)','Pertama kali muncul dengan ide gila, terakhir ikut juga','Sifatnya: loud, gokil, tapi setia kawan'],
+    quote:'"Late game gue sih santai. Yang penting farm aman, carry nanti."'
+  },
+  {
+    name:'Alghani',nick:'Gani',role:'Anak Tongkrongan #4',rank:4,
+    c1:'#ffa940',c2:'#ff8c00',seed:'AlghaniGani',
+    phone:'+62 812-3456-7004',
+    mlRole:'🎮 Mid Lane · Mage',
+    tagline:'Midlane WM, pendiam tapi burst nendang 🧙',
+    story:'Si pendiam yang kalau ngomong pasti nendang. Master of dry humor, suka bengong sambil mikirin masa depan (atau cuma bengong doang, gak ada yang tahu), dan jago ngajak ngobrol tanpa basa-basi. Di ML, Gani jadi Midlane mage WM — kalem last hit, tapi kalau udah combo burst, musuh hilang dalam 2 detik. Dikira cuek, padahal lagi nge-save energi buat lempar joke satu kalimat yang bikin semua ketawa lepas.',
+    facts:['Midlane WM — clear wave cepat, roam kecil-kecilan tapi tepat','Bisa diem satu jam, terus ngomong satu kalimat = kena semua','Jago bikin joke receh tapi timing-nya selalu pas','Sifatnya: kalem di luar, satir di dalam'],
+    quote:'"Gue diem bukan marah. Cuma lagi ngukur jarak buat combo."'
+  },
+  {
+    name:'Kevin',nick:'Pepen',role:'Anak Tongkrongan #5',rank:5,
+    c1:'#ff7a18',c2:'#ff5e3a',seed:'KevinPepen',
+    phone:'+62 812-3456-7005',
+    mlRole:'🎮 Jungle · Assassin',
+    tagline:'Jungle WM, energi gak ada habisnya ⚡',
+    story:'Energi WM. Gak pernah kehabisan ide (dan joke receh level pro). Kalau lo lagi gabut, cari Pepen — dijamin 5 menit langsung rame. Di ML dia jadi Jungler assassin WM — gank ke mana-mana, gak takut engage, kadang over-agresif tapi itulah yang bikin team punya tempo. Tipe pagi udah aktif, malem masih aktif, besoknya pagi lagi tetep aktif. Di WM dia sumber semangat, walau kadang sumber pusing juga.',
+    facts:['Jungle WM — gank ke semua lane, kadang double kill, kadang malah first blood','Bisa ngomong 3 jam nonstop tanpa jeda napas (eksagerasi dikit)','Paling semangat kalau ada kata "yuk" atau "gas"','Sifatnya: hiperaktif, positif, gak kenal lelah'],
+    quote:'"Gabut tuh penyakit. Obatnya: cari Pepen, gank terus."'
+  },
+  {
+    name:'Gilang',nick:'Nengok',role:'Anak Tongkrongan #6',rank:6,
+    c1:'#ff9a3c',c2:'#ff7e5f',seed:'GilangNengok',
+    phone:'+62 812-3456-7006',
+    mlRole:'🎮 Roam · Support',
+    tagline:'Roamer WM, map awareness dewa 👀',
+    story:'Si "nengok-nengok" yang aslinya paling perhatian. Suka ngintipin obrolan orang, tapi jangan salah — dia yang paling inget detail kecil tentang tiap orang di WM. Di ML, Gilang jadi Roamer support — sebutan "nengok" cocat banget, karena map awareness-nya dewa. Dia yang awas gank musuh dateng, yang set up vision, yang backup Icad pas lagi push. Pendengar yang baik, walaupun kelihatan santai-santai doang. Kalau lo butuh inget sesuatu tentang diri lo sendiri, tanya Gilang.',
+    facts:['Roamer WM — vision master, gank balik musuh sering dari dia','Bisa inget hal kecil yang lo cerita 3 bulan lalu','Suka "nengok" dulu sebelum ikut campur, baru ngomong','Sifatnya: observan, care, gak manyun'],
+    quote:'"Gue liatin bukan judge. Cuma lagi baca minimap, sambil jaga lo."'
+  },
+  {
+    name:'Raihan',nick:'Randoka',role:'Anak Tongkrongan #7',rank:7,
+    c1:'#c98a2e',c2:'#8b5a1b',seed:'RaihanRandoka',
+    phone:'+62 812-3456-7007',
+    mlRole:'🎮 EXP · Tank / Shotcaller',
+    tagline:'Tank + shotcaller WM, otak strategi 🧠',
+    story:'Otak strategi WM. Kalau ada rencana ribet (touring, booking lapang, ngatur makan bareng), randoka yang susun. Di ML dia jadi EXP laner tank sekaligus shotcaller — yang draft pick-nya selalu dari dia, yang call "lord", "team fight", atau "back" juga dari dia. Kalem di luar, gila di dalam — kalau udah ngomong ide, biasanya gokil tapi somehow selalu berhasil. Di WM, dia arsitek di balik tiap acara yang katanya "dadakan".',
+    facts:['Tank + shotcaller WM — draft pick selalu dari dia, call lord/tower tepat','Rencana dadakannya biasanya udah dipikirin seminggu','Kalem sampai orang lupa dia ada, tapi kalau ngomong = mutlak','Sifatnya: strategic, lowkey, tiba-tiba gila'],
+    quote:'"Dadakan itu cuma kata. Gue udah susun draft dari kemarin."'
+  },
+  {
+    name:'Hafizh',nick:'Aam',role:'Anak Tongkrongan #8',rank:8,
+    c1:'#e8c87a',c2:'#c4a04e',seed:'HafizhAam',
+    phone:'+62 812-3456-7008',
+    tagline:'Si paling "aam", selalu ada 🤲',
+    story:'Si paling "aam" alias aman. Kalau WM lagi ribut, Aam yang redain. Suka dengerin cerita, gak pernah ngejudge, dan selalu ada kalau dibutuhin — walaupun jam 3 pagi. Walaupun gak masuk lineup ML 5v5 (dia lebih demen nontonin sambil komen receh), Aam jadi "support moral" tiap sesi grind. Tipe temen yang gak banyak ngomong tapi bikin tenang. Banyak anak WM anggap Aam ini semacam "pengaman" kelompok: ada dia, suasana gak gampang meledak.',
+    facts:['Support moral ML squad — nontonin sambil bilang "anjir kena" tiap gank','Tipe pendengar yang beneran dengerin, bukan cuma nunggu giliran ngomong','Bisa dihubungin tengah malam, dijamin angkat','Sifatnya: sabar, setia, andal'],
+    quote:'"Lo main aja, gue nontonin. Kalau kena, gue bilang ‘anjir’."'
+  }
+];
+
+const dumpData=[
+  {emoji:'🎮',cap:'ML sampai subuh',sub:'squad mythic grind',cls:'w2 h2',c1:'#f5c518',c2:'#ff7a18'},
+  {emoji:'☕',cap:'Ngopi malem minggu',sub:'basecamp, jam 10',cls:'',c1:'#d4a017',c2:'#8b6914'},
+  {emoji:'🏆',cap:'Mythic achieved',sub:'squad WM',cls:'',c1:'#f5c518',c2:'#ffb800'},
+  {emoji:'⚔️',cap:'Team fight epic',sub:'5v5 rame banget',cls:'h2',c1:'#ff7a18',c2:'#ff5e3a'},
+  {emoji:'🎯',cap:'Gank mid',sub:'Gani pingsan',cls:'',c1:'#ffa940',c2:'#ff8c00'},
+  {emoji:'⚽',cap:'Futsal sore',sub:'randoka capten',cls:'',c1:'#ff9a3c',c2:'#c98a2e'},
+  {emoji:'💀',cap:'Tilt queue',sub:'Pepen ngambek',cls:'w2',c1:'#ff5e3a',c2:'#d4a017'},
+  {emoji:'🐉',cap:'Lord steal',sub:'by randoka',cls:'',c1:'#c98a2e',c2:'#8b5a1b'},
+  {emoji:'🍕',cap:'Makan all you can eat',sub:'Pepen langgan',cls:'',c1:'#e8985a',c2:'#b56b2e'},
+  {emoji:'📸',cap:'Foto bareng',sub:'sebelum pulang',cls:'w2',c1:'#f5c518',c2:'#ffa940'},
+  {emoji:'🌙',cap:'Ngobrol di lantai',sub:'topik gak penting',cls:'',c1:'#e8c87a',c2:'#c4a04e'},
+  {emoji:'🎤',cap:'Karaoke offkey',sub:'Icad paling sesat',cls:'',c1:'#ff9a3c',c2:'#ff7e5f'}
+];
+
+/* ============ RENDER PROFILES ============ */
+const profilesGrid=document.getElementById('profilesGrid');
+profiles.forEach(p=>{
+  const card=document.createElement('div');
+  card.className='profile-card reveal';
+  card.style.setProperty('--c1',p.c1);
+  card.style.setProperty('--c2',p.c2);
+  const mlBadge=p.mlRole?`<div class="ml-badge">ML</div>`:'';
+  card.innerHTML=`
+    <div class="tint"></div>
+    <div class="sheen"></div>
+    ${mlBadge}
+    <div class="photo"><div class="ava"><img src="https://api.dicebear.com/9.x/lorelei/svg?seed=${encodeURIComponent(p.seed)}&radius=20" alt="${p.name}" loading="lazy"></div></div>
+    <div class="info">
+      <span class="rank">#${p.rank} · ${p.role.split('·')[0].trim()}</span>
+      <div class="name">${p.name}</div>
+      <div class="nick">"${p.nick}"</div>
+      <div class="role">${p.role}</div>
+    </div>
+    <div class="peek">${p.tagline}</div>
+    <div class="shine"></div>
+  `;
+  card.addEventListener('click',()=>openModal(p));
+  profilesGrid.appendChild(card);
+});
+
+/* ============ RENDER DUMP ============ */
+const dumpGrid=document.getElementById('dumpGrid');
+dumpData.forEach(d=>{
+  const el=document.createElement('div');
+  el.className='dump-card reveal '+d.cls;
+  el.style.setProperty('--c1',d.c1);
+  el.style.setProperty('--c2',d.c2);
+  el.innerHTML=`<div class="tint"></div><div class="sheen"></div><div class="emoji">${d.emoji}</div><div class="cap">${d.cap}</div><div class="sub">${d.sub}</div><div class="shine"></div>`;
+  dumpGrid.appendChild(el);
+});
+
+/* ============ ML MARQUEE ============ */
+const marqItems=['ML SQUAD','ICAD','GILANG','GANI','PEPEN','RANDOKA','MYTHIC GRINDERS','WM TONGKRONGAN'];
+const track=document.getElementById('marqueeTrack');
+let marqHTML='';
+for(let r=0;r<2;r++){
+  marqItems.forEach(t=>{
+    marqHTML+=`<div class="marq-item"><span class="star">★</span>${t}<span class="sep">◆</span></div>`;
+  });
+}
+track.innerHTML=marqHTML;
+
+/* ============ MODAL ============ */
+const modal=document.getElementById('modal');
+const modalHero=document.getElementById('modalHero');
+const modalBody=document.getElementById('modalBody');
+function openModal(p){
+  modalHero.style.setProperty('--mc1',p.c1);
+  modalHero.style.setProperty('--mc2',p.c2);
+  const mlChip=p.mlRole?`<span class="ml-role">${p.mlRole}</span>`:'';
+  modalHero.innerHTML=`
+    <div class="modal-ava"><img src="https://api.dicebear.com/9.x/lorelei/svg?seed=${encodeURIComponent(p.seed)}&radius=20" alt="${p.name}"></div>
+    <h3>${p.name}</h3>
+    <div class="nick">biasa dipanggil "${p.nick}"</div>
+    <span class="role-chip">${p.role}</span>${mlChip}
+  `;
+  modalBody.innerHTML=`
+    <h4>Latar Belakang</h4>
+    <p class="story">${p.story}</p>
+    <h4>Fakta receh</h4>
+    <div class="facts">${p.facts.map(f=>`<div class="fact"><span class="dot">▸</span><span>${f}</span></div>`).join('')}</div>
+    <div class="quote">${p.quote}</div>
+    <h4>Kontak</h4>
+    <div class="contact-row">
+      <a href="tel:${p.phone.replace(/\s|-/g,'')}" class="c-item"><span class="ic">📱</span><div><span class="lbl">Nomor HP</span><span class="val">${p.phone}</span></div></a>
+      <a href="https://wa.me/${p.phone.replace(/\D/g,'')}" target="_blank" rel="noopener" class="c-item"><span class="ic">💬</span><div><span class="lbl">WhatsApp</span><span class="val">Chat ${p.nick} langsung</span></div></a>
+      <a href="#contact" class="c-item" id="modalToContact"><span class="ic">💌</span><div><span class="lbl">Mau kirim pesan ke WM?</span><span class="val">Buka form kontak</span></div></a>
+    </div>
+  `;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  const mc=document.getElementById('modalToContact');
+  if(mc)mc.addEventListener('click',()=>closeModal());
+}
+function closeModal(){modal.classList.remove('open');document.body.style.overflow=''}
+document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modalBackdrop').addEventListener('click',closeModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ============ PRELOADER ============ */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('preloader').classList.add('hide');
+    revealInit();
+  },900);
+});
+
+/* ============ SCROLL: progress + nav + active + totop ============ */
+const nav=document.getElementById('nav');
+const navMenu=document.getElementById('navMenu');
+const navToggle=document.getElementById('navToggle');
+const scrollProg=document.getElementById('scrollProg');
+function onScroll(){
+  const st=window.scrollY;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  scrollProg.style.width=(h>0?(st/h*100):0)+'%';
+  if(st>40)nav.classList.add('scrolled');else nav.classList.remove('scrolled');
+  const sections=document.querySelectorAll('section[id],header[id]');
+  let cur='';
+  sections.forEach(s=>{if(st>=s.offsetTop-130)cur=s.id});
+  document.querySelectorAll('.nav-menu a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+  document.getElementById('toTop').classList.toggle('show',st>500);
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+navToggle.addEventListener('click',()=>navMenu.classList.toggle('open'));
+document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>navMenu.classList.remove('open')));
+document.getElementById('toTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ============ REVEAL ON SCROLL ============ */
+let io;
+function revealInit(){
+  io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+
+/* ============ COUNT ANIMATION ============ */
+const countIO=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=+el.dataset.count;
+      let cur=0;const step=Math.max(1,Math.ceil(target/40));
+      const t=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(t)}el.textContent=cur},30);
+      countIO.unobserve(el);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(c=>countIO.observe(c));
+
+/* ============ CURSOR GLOW ============ */
+const glow=document.getElementById('cursorGlow');
+let gx=window.innerWidth/2,gy=window.innerHeight/2,cx=gx,cy=gy;
+window.addEventListener('mousemove',e=>{gx=e.clientX;gy=e.clientY});
+function glowLoop(){
+  cx+=(gx-cx)*.12;cy+=(gy-cy)*.12;
+  glow.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+  requestAnimationFrame(glowLoop);
+}
+if(window.matchMedia('(hover:hover)').matches)glowLoop();
+
+/* ============ PARTICLES ============ */
+const pc=document.getElementById('particles');
+for(let i=0;i<22;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  const s=Math.random()*3+2;
+  p.style.width=s+'px';p.style.height=s+'px';
+  p.style.left=Math.random()*100+'%';
+  p.style.animationDuration=(Math.random()*10+12)+'s';
+  p.style.animationDelay=(-Math.random()*20)+'s';
+  if(Math.random()>.5){p.style.background='var(--orange)';p.style.boxShadow='0 0 8px var(--orange)';}
+  pc.appendChild(p);
+}
+
+/* ============ TILT (profile + dump) ============ */
+function attachTilt(el,strength){
+  el.addEventListener('mousemove',e=>{
+    if(window.innerWidth<980)return;
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    el.style.transform=`translateY(-8px) perspective(700px) rotateX(${y*-strength}deg) rotateY(${x*strength}deg)`;
+  });
+  el.addEventListener('mouseleave',()=>{el.style.transform=''});
+}
+document.querySelectorAll('.profile-card').forEach(c=>attachTilt(c,8));
+document.querySelectorAll('.dump-card').forEach(c=>attachTilt(c,6));
+
+/* ============ MAGNETIC BUTTONS ============ */
+document.querySelectorAll('.btn').forEach(b=>{
+  b.addEventListener('mousemove',e=>{
+    if(window.innerWidth<980)return;
+    const r=b.getBoundingClientRect();
+    const x=e.clientX-r.left-r.width/2;
+    const y=e.clientY-r.top-r.height/2;
+    b.style.transform=`translate(${x*.18}px,${y*.22}px) translateY(-2px)`;
+  });
+  b.addEventListener('mouseleave',()=>{b.style.transform=''});
+});
+
+/* ============ PARALLAX HERO ORB ============ */
+const heroVisual=document.getElementById('heroVisual');
+window.addEventListener('mousemove',e=>{
+  if(window.innerWidth<980)return;
+  const x=(e.clientX/window.innerWidth-.5)*20;
+  const y=(e.clientY/window.innerHeight-.5)*20;
+  heroVisual.style.transform=`translate(${x}px,${y}px)`;
+});
+
+/* ============ CONTACT FORM (FormSubmit AJAX) ============ */
+const form=document.getElementById('contactForm');
+const statusEl=document.getElementById('formStatus');
+const submitBtn=document.getElementById('submitBtn');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const data={
+    name:document.getElementById('cname').value.trim(),
+    email:document.getElementById('cemail').value.trim(),
+    message:document.getElementById('cmsg').value.trim(),
+    _subject:'Pesan baru dari website WM 💌',
+    _template:'table'
+  };
+  if(!data.name||!data.email||!data.message)return;
+  submitBtn.disabled=true;
+  submitBtn.textContent='Lagi kirim… ✈️';
+  statusEl.className='form-status show load';
+  statusEl.textContent='Sabar ya, pesan lo lagi diterbangin ke inbox kita…';
+  try{
+    const res=await fetch('https://formsubmit.co/ajax/risyadibrahim0@gmail.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    const json=await res.json();
+    if(res.ok&&json.success==='true'){
+      statusEl.className='form-status show ok';
+      statusEl.textContent='Pesan lo udah sampe! 🎉 Kita baca nanti. Makasih udah nyapa — jangan sungken mampir ya.';
+      form.reset();
+    }else throw new Error('gagal');
+  }catch(err){
+    statusEl.className='form-status show err';
+    statusEl.textContent='Yah, ada gangguan pas ngirim 😅 Coba lagi sebentar, atau email langsung ke risyadibrahim0@gmail.com ya.';
+  }finally{
+    submitBtn.disabled=false;
+    submitBtn.textContent='Kirim Pesan ✈️';
+  }
+});
+
+/* fallback reveal kalau load telat */
+setTimeout(()=>{if(!io)revealInit()},1600);
+onScroll();
+</script>
+</body>
+</html>
