@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WM — Worker Muktar | Tongkrongan Paling Stress</title>
+<title>WM — Worker Muktar | Tongkrongan Paling Sibuk</title>
 <meta name="description" content="WM (Worker Muktar) — tongkrongan 8 anak yang rame, receh, dan baper. Main ML bareng tiap malem. Kenalan yuk!">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -787,7 +787,7 @@ img,svg{max-width:100%;display:block}
         <div class="line"><span class="ic">☕</span><div><span class="l">Tarif</span><span class="v">Gratis (bawa ciki boleh)</span></div></div>
         <div class="line"><span class="ic">📧</span><div><span class="l">Email</span><span class="v">risyadibrahim0@gmail.com</span></div></div>
       </div>
-      <form class="form-card reveal-r d1" id="contactForm">
+      <form class="form-card reveal-r d1" id="contactForm" action="https://formspree.io/f/mrpqaqyg" method="POST">
         <div class="form">
           <div class="field">
             <label for="cname">Nama lo siapa?</label>
@@ -801,6 +801,8 @@ img,svg{max-width:100%;display:block}
             <label for="cmsg">Pesan / curhat / undangan</label>
             <textarea id="cmsg" name="message" placeholder="Tulis apa aja… mau nimbrung, mau undang main ML, mau curhat soal mantan, semua boleh. Jangan sungkan." required></textarea>
           </div>
+          <!-- honeypot anti-spam Formspree (bot isi, manusia gak) -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button type="submit" class="btn btn-primary" id="submitBtn" style="justify-content:center">Kirim Pesan ✈️</button>
           <div class="form-status" id="formStatus"></div>
         </div>
@@ -1323,36 +1325,42 @@ setInterval(function(){
   if(started&&playing){ytCmd('getCurrentTime');if(!duration)ytCmd('getDuration')}
 },1000);
 
-/* ============ CONTACT FORM (FormSubmit AJAX) ============ */
+/* ============ CONTACT FORM (Formspree → risyadibrahim0@gmail.com) ============ */
 const form=document.getElementById('contactForm');
 const statusEl=document.getElementById('formStatus');
 const submitBtn=document.getElementById('submitBtn');
 form.addEventListener('submit',async e=>{
   e.preventDefault();
-  const data={
-    name:document.getElementById('cname').value.trim(),
-    email:document.getElementById('cemail').value.trim(),
-    message:document.getElementById('cmsg').value.trim(),
-    _subject:'Pesan baru dari website WM 💌',
-    _template:'table'
-  };
-  if(!data.name||!data.email||!data.message)return;
+  const name=document.getElementById('cname').value.trim();
+  const email=document.getElementById('cemail').value.trim();
+  const message=document.getElementById('cmsg').value.trim();
+  if(!name||!email||!message)return;
   submitBtn.disabled=true;
   submitBtn.textContent='Lagi kirim… ✈️';
   statusEl.className='form-status show load';
   statusEl.textContent='Sabar ya, pesan lo lagi diterbangin ke inbox kita…';
   try{
-    const res=await fetch('https://formsubmit.co/ajax/risyadibrahim0@gmail.com',{
+    // FormData (multipart) = no CORS preflight → reliable dari file://
+    const fd=new FormData();
+    fd.append('name',name);
+    fd.append('email',email);
+    fd.append('message',message);
+    fd.append('_replyto',email);          // biar "Reply" langsung ke pengirim
+    fd.append('_subject','Pesan baru dari website WM 💌');
+    const res=await fetch('https://formspree.io/f/mrpqaqyg',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(data)
+      headers:{'Accept':'application/json'},   // minta response JSON (bukan redirect)
+      body:fd
     });
-    const json=await res.json();
-    if(res.ok&&json.success==='true'){
+    let json=null;try{json=await res.json()}catch(e){}
+    if(res.ok){
       statusEl.className='form-status show ok';
       statusEl.textContent='Pesan lo udah sampe! 🎉 Kita baca nanti. Makasih udah nyapa — jangan sungken mampir ya.';
       form.reset();
-    }else throw new Error('gagal');
+    }else{
+      const msg=(json&&json.errors&&json.errors[0]&&json.errors[0].message)||'gagal';
+      throw new Error(msg);
+    }
   }catch(err){
     statusEl.className='form-status show err';
     statusEl.textContent='Yah, ada gangguan pas ngirim 😅 Coba lagi sebentar, atau email langsung ke risyadibrahim0@gmail.com ya.';
